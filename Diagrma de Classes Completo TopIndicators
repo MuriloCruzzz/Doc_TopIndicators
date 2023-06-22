@@ -15,6 +15,7 @@ class Produtos {
   - nome: string
   - quantidade: int
   - validade: date
+  - idCliente: int
   + cadastrarProduto(): void
   + alterarProduto(): void
   + excluirProduto(): void
@@ -34,7 +35,7 @@ class Producao {
   - idProduto: int
   - quantidade: int
   - hora: datetime
-  - status: string
+  - status: bool
   - refugoProduto: int
   - paradasDeLinhas: int
   + cadastrarProducao(): void
@@ -47,6 +48,7 @@ class Demanda {
   - idCliente: int
   - quantidade: int
   - idProduto: int
+  - Prazo: Date
   - status: string
   + cadastrarDemanda(): void
   + alterarDemanda(): void
@@ -55,9 +57,11 @@ class Demanda {
 
 class Turnos {
   - id: int
-  - horario: string
+  - horario: dateTime
   - data: date
   - setor: string
+  - idProdução: int[]
+  - Quantidade Produzida: int
   + cadastrarTurno(): void
   + alterarTurno(): void
   + excluirTurno(): void
@@ -83,4 +87,3 @@ IndicadoresKPI ..> Cliente
 IndicadoresKPI ..> Usuario
 
 @enduml
-
