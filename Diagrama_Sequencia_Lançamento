@@ -1,0 +1,79 @@
+@startuml
+
+class Usuario {
+  - id: int
+  - nome: string
+  - senha: string
+  - setor: string
+  - grupoAcesso: int
+  + cadastrar(): void
+  + alterar(): void
+}
+
+class Produto {
+  - id: int
+  - nome: string
+  - quantidade: int
+  - validade: date
+  + cadastrar(): void
+  + alterar(): void
+}
+
+class Cliente {
+  - id: int
+  - nome: string
+  - idProdutos: List<int>
+  + cadastrar(): void
+  + alterar(): void
+}
+
+class Producao {
+  - id: int
+  - produto: Produto
+  - quantidade: int
+  - hora: time
+  - status: string
+  - refugoProduto: int
+  - paradasLinha: int
+  + cadastrar(): void
+  + alterar(): void
+  + lancarProducao(): void
+}
+
+class Demanda {
+  - id: int
+  - idCliente: int
+  - quantidade: int
+  - idProduto: int
+  - status: string
+  + cadastrar(): void
+  + alterar(): void
+}
+
+class Turnos {
+  - id: int
+  - horario: time
+  - data: date
+  - setor: string
+  + cadastrar(): void
+  + alterar(): void
+}
+
+class Indicadores {
+  + calcularKPI(): void
+}
+
+Usuario "1" --> "1..*" Turnos
+Usuario "1" --> "*" Producao
+Usuario "1" --> "1" Cliente
+Usuario "1" --> "1" Produto
+Usuario "1" --> "1" Indicadores
+
+Cliente "1" --> "1..*" Produto
+
+Producao "1" --> "1" Produto
+
+Demanda "1" --> "1" Cliente
+Demanda "1" --> "1" Produto
+
+@enduml
