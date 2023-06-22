@@ -1,85 +1,26 @@
 @startuml
-class Usuario {
-  - id: int
-  - nome: string
-  - senha: string
-  - setor: string
-  - grupoAcesso: int
-  + cadastrarUsuario(): void
-  + alterarUsuario(): void
-  + excluirUsuario(): void
-}
+actor Supervisor
 
-class Produtos {
-  - id: int
-  - nome: string
-  - quantidade: int
-  - validade: date
-  + cadastrarProduto(): void
-  + alterarProduto(): void
-  + excluirProduto(): void
-}
+Supervisor -> Sistema: Entrar na visualização de indicadores KPI
 
-class Cliente {
-  - id: int
-  - nome: string
-  - idProdutos: int[]
-  + cadastrarCliente(): void
-  + alterarCliente(): void
-  + excluirCliente(): void
-}
+activate Sistema
 
-class Producao {
-  - id: int
-  - idProduto: int
-  - quantidade: int
-  - hora: datetime
-  - status: string
-  - refugoProduto: int
-  - paradasDeLinhas: int
-  + cadastrarProducao(): void
-  + alterarProducao(): void
-  + excluirProducao(): void
-}
+Sistema -> IndicadoresKPI: Solicitar dados para exibição
 
-class Demanda {
-  - id: int
-  - idCliente: int
-  - quantidade: int
-  - idProduto: int
-  - status: string
-  + cadastrarDemanda(): void
-  + alterarDemanda(): void
-  + excluirDemanda(): void
-}
+activate IndicadoresKPI
 
-class Turnos {
-  - id: int
-  - horario: string
-  - data: date
-  - setor: string
-  + cadastrarTurno(): void
-  + alterarTurno(): void
-  + excluirTurno(): void
-}
+IndicadoresKPI -> IndicadoresKPI: Comparar quantidade produzida\ncom demanda dos clientes
+IndicadoresKPI -> IndicadoresKPI: Calcular tempo médio de produção
+IndicadoresKPI -> IndicadoresKPI: Acompanhar cumprimento do prazo\nde entrega
+IndicadoresKPI -> IndicadoresKPI: Monitorar nível de estoque\nem relação à demanda
+IndicadoresKPI -> IndicadoresKPI: Calcular produtividade\npor funcionário
 
-class IndicadoresKPI {
-  + calcularQuantidadeProduzidaVsDemanda(): void
-  + calcularTempoMedioProducao(): void
-  + calcularCumprimentoPrazoEntrega(): void
-  + monitorarNivelEstoque(): void
-  + calcularProdutividadePorFuncionario(): void
-}
+IndicadoresKPI --> Sistema: Retornar dados dos indicadores
 
-Usuario "1" --> "1..*" Produtos
-Usuario "1" --> "1..*" Cliente
-Usuario "1" --> "1..*" Producao
-Usuario "1" --> "1..*" Demanda
-Usuario "1" --> "1..*" Turnos
-IndicadoresKPI ..> Demanda
-IndicadoresKPI ..> Produtos
-IndicadoresKPI ..> Producao
-IndicadoresKPI ..> Cliente
-IndicadoresKPI ..> Usuario
+deactivate IndicadoresKPI
+
+Sistema -> Supervisor: Exibir indicadores KPI
+
+deactivate Sistema
 
 @enduml
