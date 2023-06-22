@@ -15,6 +15,6 @@ Todos os codigos a cima estão em PLantUML, para gerar diagramas é necessarios 
 Acesse: https://app.diagrams.net/ -> faça o login
 
 
-Novo Diagrama > Ordenar > Inserir > Avançado > PlantUML > Cole o código PLantUML. 
+Novo Diagrama > Ordenar > Inserir > Avançado > PlantUML > Cole o código PLantUML > Inserir
 
 
