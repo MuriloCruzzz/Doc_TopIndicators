@@ -1,79 +1,38 @@
 @startuml
 
-class Usuario {
-  - id: int
-  - nome: string
-  - senha: string
-  - setor: string
-  - grupoAcesso: int
-  + cadastrar(): void
-  + alterar(): void
-}
+actor Operador
 
-class Produto {
-  - id: int
-  - nome: string
-  - quantidade: int
-  - validade: date
-  + cadastrar(): void
-  + alterar(): void
-}
+activate Operador
 
-class Cliente {
-  - id: int
-  - nome: string
-  - idProdutos: List<int>
-  + cadastrar(): void
-  + alterar(): void
-}
+Operador -> Sistema: Acessar sistema
+activate Sistema
 
-class Producao {
-  - id: int
-  - produto: Produto
-  - quantidade: int
-  - hora: time
-  - status: string
-  - refugoProduto: int
-  - paradasLinha: int
-  + cadastrar(): void
-  + alterar(): void
-  + lancarProducao(): void
-}
+Sistema -> Sistema: Verificar se linha está aberta
+activate Sistema
 
-class Demanda {
-  - id: int
-  - idCliente: int
-  - quantidade: int
-  - idProduto: int
-  - status: string
-  + cadastrar(): void
-  + alterar(): void
-}
+Sistema --> Operador: Linha aberta
 
-class Turnos {
-  - id: int
-  - horario: time
-  - data: date
-  - setor: string
-  + cadastrar(): void
-  + alterar(): void
-}
+Operador -> Sistema: Acessar produção
+activate Produção
 
-class Indicadores {
-  + calcularKPI(): void
-}
+Sistema --> Operador: Produção acessada
 
-Usuario "1" --> "1..*" Turnos
-Usuario "1" --> "*" Producao
-Usuario "1" --> "1" Cliente
-Usuario "1" --> "1" Produto
-Usuario "1" --> "1" Indicadores
+Operador -> Produção: Lançar/Alterar dados da produção
+activate Produção
 
-Cliente "1" --> "1..*" Produto
+Produção --> Operador: Dados da produção atualizados
 
-Producao "1" --> "1" Produto
+Operador -> Produção: Finalizar produção
+Produção -> Sistema: Enviar dados da produção
+activate Sistema
 
-Demanda "1" --> "1" Cliente
-Demanda "1" --> "1" Produto
+Sistema --> Operador: Produção finalizada
+
+deactivate Produção
+deactivate Sistema
+
+Operador -> Sistema: Encerrar sessão
+deactivate Operador
+deactivate Sistema
 
 @enduml
