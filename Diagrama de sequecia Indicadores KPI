@@ -1,0 +1,85 @@
+@startuml
+class Usuario {
+  - id: int
+  - nome: string
+  - senha: string
+  - setor: string
+  - grupoAcesso: int
+  + cadastrarUsuario(): void
+  + alterarUsuario(): void
+  + excluirUsuario(): void
+}
+
+class Produtos {
+  - id: int
+  - nome: string
+  - quantidade: int
+  - validade: date
+  + cadastrarProduto(): void
+  + alterarProduto(): void
+  + excluirProduto(): void
+}
+
+class Cliente {
+  - id: int
+  - nome: string
+  - idProdutos: int[]
+  + cadastrarCliente(): void
+  + alterarCliente(): void
+  + excluirCliente(): void
+}
+
+class Producao {
+  - id: int
+  - idProduto: int
+  - quantidade: int
+  - hora: datetime
+  - status: string
+  - refugoProduto: int
+  - paradasDeLinhas: int
+  + cadastrarProducao(): void
+  + alterarProducao(): void
+  + excluirProducao(): void
+}
+
+class Demanda {
+  - id: int
+  - idCliente: int
+  - quantidade: int
+  - idProduto: int
+  - status: string
+  + cadastrarDemanda(): void
+  + alterarDemanda(): void
+  + excluirDemanda(): void
+}
+
+class Turnos {
+  - id: int
+  - horario: string
+  - data: date
+  - setor: string
+  + cadastrarTurno(): void
+  + alterarTurno(): void
+  + excluirTurno(): void
+}
+
+class IndicadoresKPI {
+  + calcularQuantidadeProduzidaVsDemanda(): void
+  + calcularTempoMedioProducao(): void
+  + calcularCumprimentoPrazoEntrega(): void
+  + monitorarNivelEstoque(): void
+  + calcularProdutividadePorFuncionario(): void
+}
+
+Usuario "1" --> "1..*" Produtos
+Usuario "1" --> "1..*" Cliente
+Usuario "1" --> "1..*" Producao
+Usuario "1" --> "1..*" Demanda
+Usuario "1" --> "1..*" Turnos
+IndicadoresKPI ..> Demanda
+IndicadoresKPI ..> Produtos
+IndicadoresKPI ..> Producao
+IndicadoresKPI ..> Cliente
+IndicadoresKPI ..> Usuario
+
+@enduml
