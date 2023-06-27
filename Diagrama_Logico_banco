@@ -1,0 +1,99 @@
+@startuml
+
+entity "Usuario" {
+  + ID : int (PK)
+  nome : varchar(255)
+  senha : varchar(255)
+  Grupo_Acesso : varchar(255)
+--------
+  #id_setor : varchar(255) (FK)
+  
+}
+
+entity "Cliente" {
+  + id_Cliente (PK)
+  nome : varchar(255)
+--------
+  # id_Produto (FK)
+}
+
+entity "Produto" {
+  + id_produto (PK)
+ ------
+  Quantidade : int
+  Data_Validade : date
+  Nome : varchar(255)
+}
+
+entity "ClienteProduto" {
+  + ID_ClienteProduto : int
+  + ID_ProdutoCliente : int
+  -- foreign keys --
+  #-- ID_Cliente (FK)
+  #-- ID_Produto (FK)
+}
+
+entity "Producao" {
+  + id_Producao (PK)
+  quantidade_Produzida : int
+  hora_inicio : time
+  hora_final : time
+  tempo_total_producao : time
+  status : varchar(255)
+  refugoProdutos : int
+  paradasLinha : int
+  #id_setor : varchar(255) (FK)
+  #ID_Produto : int (FK)
+  #ID_Cliente : int (FK)
+}
+
+entity "Demanda" {
+  + id_Demanda (PK)
+  quantidade_Demandada : int
+  prazo : date
+  status : varchar(255)
+  #ID_Cliente : int (FK)
+  #ID_Produto : int (FK)
+  hora_inicio : time
+  hora_final : time
+  qunatidade_produzida : int
+  tempo_total_producao : time
+}
+
+entity "Setor" {
+  + id_setor(PK)
+  Nome : varchar(255)
+}
+
+entity "Turno" {
+  + ID : int (PK)
+  horario_inicio : time
+  horario_final : time
+  data : date
+  #id_setor : int (FK)
+  quantidadeTotalProduzida : int
+  #ID_Producao : int (FK)
+}
+
+entity "IndicadoresKPI" {
+  + ID : int (PK)
+  Qtd_produzida_demanda_dos_clientes : int
+  Tempo_médio_de_produção : time
+  Prazo_entrega : date
+  Estoque_Demanda : int
+  Produtividade_funcionário : int
+}
+
+
+"Demanda"  -->  "Producao": ID_Demanda
+"Producao"  -->  "Turno": ID_Turno
+"Produto" --> "ClienteProduto" : ID_Produto
+"Produto" --> "Producao" : ID_Produto
+"Produto" --> "Demanda" : ID_Produto
+"Cliente" --> "ClienteProduto" : Id_Cliente
+"Cliente" --> "Producao" : Id_Cliente
+"Cliente" --> "Demanda" : Id_Cliente
+"Setor" --> "Producao" : ID_Setor
+"Setor" --> "Usuario" : ID_Setor
+"Setor" --> "Turno" : ID_Setor
+
